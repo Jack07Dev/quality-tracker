@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f3d5e">
+  <title>Quality Tracker</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Quality Inspections</h1>
+    <div id="netbar" class="netbar" hidden></div>
+  </header>
+
+  <main>
+    <!-- LOG -->
+    <section id="view-log" class="view">
+      <form id="log-form">
+        <label>Date
+          <input type="date" name="inspection_date" required>
+        </label>
+        <label>Machine / line ID
+          <input type="text" name="machine_id" required maxlength="50" autocomplete="off"
+                 autocapitalize="characters" placeholder="e.g. LOOM-12">
+        </label>
+        <label>Defect type
+          <select name="defect_type" required>
+            <option>Weave Defect</option>
+            <option>Shade Variation</option>
+            <option>Hole/Tear</option>
+            <option>Count Deviation</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <fieldset class="severity">
+          <legend>Severity</legend>
+          <label class="sev sev-critical"><input type="radio" name="severity" value="Critical" required><span>Critical</span></label>
+          <label class="sev sev-major"><input type="radio" name="severity" value="Major"><span>Major</span></label>
+          <label class="sev sev-minor"><input type="radio" name="severity" value="Minor"><span>Minor</span></label>
+        </fieldset>
+        <label>Remarks <small>(optional)</small>
+          <textarea name="remarks" rows="3" maxlength="1000"></textarea>
+        </label>
+        <p id="log-error" class="error" role="alert" hidden></p>
+        <button type="submit" class="primary">Log inspection</button>
+      </form>
+    </section>
+
+    <!-- LIST -->
+    <section id="view-list" class="view" hidden>
+      <details class="filters">
+        <summary>Filters &amp; sort <span id="filter-count" class="pill" hidden></span></summary>
+        <div class="grid2">
+          <label>Severity
+            <select id="f-severity"><option value="">All</option><option>Critical</option><option>Major</option><option>Minor</option></select>
+          </label>
+          <label>Status
+            <select id="f-status"><option value="">All</option><option>Open</option><option>Resolved</option></select>
+          </label>
+          <label>From <input type="date" id="f-from"></label>
+          <label>To <input type="date" id="f-to"></label>
+        </div>
+        <label>Sort by
+          <select id="f-sort">
+            <option value="inspection_date:desc">Newest first</option>
+            <option value="inspection_date:asc">Oldest first</option>
+            <option value="severity:asc">Severity (critical first)</option>
+            <option value="machine_id:asc">Machine A–Z</option>
+            <option value="created_at:desc">Recently logged</option>
+          </select>
+        </label>
+        <button type="button" id="f-clear" class="link">Clear filters</button>
+      </details>
+      <p id="list-meta" class="meta"></p>
+      <div id="list"></div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section id="view-summary" class="view" hidden>
+      <div id="summary"></div>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Sections">
+    <button data-tab="log" aria-current="page">Log</button>
+    <button data-tab="list">Inspections</button>
+    <button data-tab="summary">Summary</button>
+  </nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

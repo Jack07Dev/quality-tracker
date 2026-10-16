@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Optional: require this value in the X-SAP-Secret header on POST /api/sap-webhook
+      SAP_WEBHOOK_SECRET: ""
+    volumes:
+      - tracker-data:/data   # SQLite file survives container rebuilds
+volumes:
+  tracker-data:
